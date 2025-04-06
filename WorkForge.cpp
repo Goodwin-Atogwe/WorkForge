@@ -1,21 +1,40 @@
 #include <iostream>
+#include <vector>
+using namespace std;
 
-void drawHeader(const char* hName) {
-    std::cout << "------------------------------------------------------------\n";
-    std::cout << "------------------------------------------------------------\n";
-    std::cout << "\t\t" << hName;
-    std::cout << "\n------------------------------------------------------------\n";
-    std::cout << "------------------------------------------------------------\n";
- }
+class createMenu {
+private: 
+    const char* hName;
+    vector<string> options;
+    void drawHeader() {
+        std::cout << "------------------------------------------------------------\n";
+        std::cout << "------------------------------------------------------------\n";
+        std::cout << "\t\t" << hName;
+        std::cout << "\n------------------------------------------------------------\n";
+        std::cout << "------------------------------------------------------------\n";
+    }
+    int index = 1;
+public:
+    createMenu(const char* headerText):hName(headerText) {}
+    void addOption(const char* option) {
+        options.push_back(option);
+    }
+    void draw() {
+        drawHeader();
+        for (const auto& opt : options) {
+            cout << index << " " << opt << endl;
+            index++;
+        }
+    }
+};
 
-void drawOption(const char* oName) {
-    std::cout << oName << "\n";
-}
 
 int main()
 {
-    drawHeader("EMPLOYEE MANAGEMENT SYSTEM");
-    drawOption("1. Login as Admin");
-    drawOption("2. Login as Manager");
-    drawOption("3. Exit");
+    createMenu mainMenu("EMPLOYEE MANAGEMENT SYSTEM");
+    mainMenu.addOption("Login As Admin");
+    mainMenu.addOption("Login As Manager");
+    mainMenu.addOption("Exit");
+    mainMenu.draw();
+        
 }
