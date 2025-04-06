@@ -14,7 +14,9 @@ private:
         std::cout << "------------------------------------------------------------\n";
     }
     int index = 1;
+    int menuChoice = 0;
 public:
+    
     createMenu(const char* headerText):hName(headerText) {}
     void addOption(const char* option) {
         options.push_back(option);
@@ -25,7 +27,12 @@ public:
             cout << index << " " << opt << endl;
             index++;
         }
+        cout << "Enter your choice: ";
+        cin >> menuChoice;
+
+        cout << "Your choice was: " << menuChoice;
     }
+
 };
 
 
