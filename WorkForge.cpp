@@ -43,19 +43,24 @@ public:
         //accepts user input
         cout << "Enter your choice: ";
         cin >> menuChoice;
-        if (menuChoice <= actions.size()) {
-            actions[menuChoice - 1]();
-        }
-        else {
-            cout << "INVALID CHOICE!!\n";
-        }
-        /*//check if user input is correct
-        if (cin.fail()){
+        /*
+        //check if user input is correct
+        if (cin.fail()) {
             cin.clear();
             cin.sync();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << "INVALID INPUT! PLEASE ENTER A NUMBER";
         }*/
+        //switches menu based on user's input
+        if (menuChoice>0 && !cin.fail() && menuChoice <= actions.size()) {
+            actions[menuChoice - 1]();
+        }
+        else {
+            cin.clear();
+            cin.sync();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            cout << "INVALID INPUT! PLEASE ENTER A NUMBER";
+        }
     }
 
 };
@@ -63,27 +68,33 @@ public:
 
 int main()
 {
-
-    createMenu adminMenu("ADMIN DASHBOARD");
-    adminMenu.addOption("View Employees", []() {exit(0); });
-    adminMenu.addOption("Add Employee", []() {exit(0); });
-    adminMenu.addOption("Search Employee", []() {exit(0); });
-    adminMenu.addOption("Update Employee", []() {exit(0); });
-    adminMenu.addOption("Delete Employee", []() {exit(0); });
-    adminMenu.addOption("Logout", []() {exit(0); });
-
-    createMenu managerMenu("MANAGER DASHBOARD");
-    managerMenu.addOption("Add Employee", []() {cout << "this is the Addemployee Page" << endl;});
-    managerMenu.addOption("Search Employee", []() {exit(0); });
-    managerMenu.addOption("Update Employee", []() {exit(0); });
-    managerMenu.addOption("Delete Employee", []() {exit(0); });
-    managerMenu.addOption("Logout", []() {exit(0); });
-
     createMenu mainMenu("EMPLOYEE MANAGEMENT SYSTEM");
-    mainMenu.addOption("Login As Admin", [&adminMenu]() {adminMenu.draw();});
+    createMenu adminMenu("ADMIN DASHBOARD");
+    createMenu managerMenu("MANAGER DASHBOARD");
+
+
+    mainMenu.addOption("Login As Admin", [&adminMenu]() {adminMenu.draw(); });
     mainMenu.addOption("Login As Manager", [&managerMenu]() {managerMenu.draw(); });
-    mainMenu.addOption("Exit", []() {exit(0);});
-    mainMenu.draw();
+    mainMenu.addOption("Exit", []() {exit(0); });
+
+    adminMenu.addOption("View Employees", []() {cout << "this is the View Employees Page" << endl; });
+    adminMenu.addOption("Add Employee", []() {cout << "this is the Add Employee Page" << endl; });
+    adminMenu.addOption("Search Employee", []() {cout << "this is the Search Employee Page" << endl; });
+    adminMenu.addOption("Update Employee", []() {cout << "this is the Update Employee Page" << endl; });
+    adminMenu.addOption("Delete Employee", []() {cout << "this is the Delete Employee Page" << endl; });
+    adminMenu.addOption("Logout", [&mainMenu]() {mainMenu.draw(); });
+
+    managerMenu.addOption("Add Employee", []() {cout << "this is the Add Employee Page" << endl;});
+    managerMenu.addOption("Search Employee", []() {cout << "this is the Search Employee Page" << endl; });
+    managerMenu.addOption("Update Employee", []() {cout << "this is the Update Employee Page" << endl; });
+    managerMenu.addOption("Delete Employee", []() {cout << "this is the Delete Employee Page" << endl; });
+    managerMenu.addOption("Logout", [&mainMenu]() {mainMenu.draw(); });
+
+
+    while (true) {
+        mainMenu.draw();
+    }
+    
 
     /*//Admin Menu
     if (mainMenu.menuChoice == 1) {
