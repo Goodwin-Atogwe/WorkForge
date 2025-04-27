@@ -36,30 +36,22 @@ public:
             cout << index << " " << opt << endl;
             index++;
         }
-
-        
-        int menuMap = options.size();
         
         //accepts user input
         cout << "Enter your choice: ";
         cin >> menuChoice;
-        /*
-        //check if user input is correct
-        if (cin.fail()) {
-            cin.clear();
-            cin.sync();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "INVALID INPUT! PLEASE ENTER A NUMBER";
-        }*/
         //switches menu based on user's input
-        if (menuChoice>0 && !cin.fail() && menuChoice <= actions.size()) {
+        if (menuChoice > 0 && menuChoice <= actions.size() && !cin.fail()) {
             actions[menuChoice - 1]();
         }
         else {
             cin.clear();
             cin.sync();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << "INVALID INPUT! PLEASE ENTER A NUMBER";
+            cout << "INVALID INPUT!!!\n";
+            cout << "Press Enter to continue";
+            cin.get();
+            draw();
         }
     }
 
@@ -94,18 +86,4 @@ int main()
     while (true) {
         mainMenu.draw();
     }
-    
-
-    /*//Admin Menu
-    if (mainMenu.menuChoice == 1) {
-        adminMenu.draw();
-    }
-    //Manager menu
-    else if (mainMenu.menuChoice == 2) {
-        managerMenu.draw();
-    }
-    //Exit
-    else if (mainMenu.menuChoice == 3)
-        exit(0);
-    */
 }
